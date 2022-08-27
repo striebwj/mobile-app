@@ -13,11 +13,16 @@
         </ion-toolbar>
       </ion-header>
     
-      <div id="container">
+      <div class="container">
 
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <button @click="register">Register Test</button>
+
       </div>
+
+      <div class="container">
+        <button>Login Test</button>
+      </div>
+
     </ion-content>
   </ion-page>
 </template>
@@ -42,45 +47,25 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.getCSRFToken()
   },
   methods: {
-    getCSRFToken() {
-      axios.get('http://mobile-app-backend.test/sanctum/csrf-cookie').then(response => {
-        console.log(response)
-      });
+    async register() {
+      axios.defaults.withCredentials = true;
+
+      await axios.get('http://mobile-app-backend.test/sanctum/csrf-cookie')
+      await axios.post("http://mobile-app-backend.test/register", {
+        username: "test@test.com",
+        password: "password"
+      })
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
     }
   }
 
 });
 </script>
 
-<style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-</style>
