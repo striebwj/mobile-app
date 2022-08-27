@@ -14,18 +14,6 @@
       </ion-header>
     
       <div id="container">
-        <ion-card>
-          <img src="//inkboxdesigns.imgix.net/EaFFas9bt6bKD21hkg7Ehp50lfuyOHerLzKVZnJk.jpg?auto=compress,format" alt="Test">
-          <ion-card-header>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-            <ion-card-title>Card Title</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            Keep close to Nature's heart... and break clear away, once in awhile,
-            and climb a mountain or spend a week in the woods. Wash your spirit clean.
-          </ion-card-content>
-        </ion-card>
 
         <strong>Ready to create an app?</strong>
         <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
@@ -35,7 +23,7 @@
 </template>
 
 <script>
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import axios from "axios";
 
@@ -47,27 +35,20 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
-    IonCard,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-    IonCardContent
   },
   data() {
     return {
-      product: []
+      csfr: ''
     }
   },
   mounted() {
-    this.getProduct()
+    this.getCSRFToken()
   },
   methods: {
-    getProduct() {
-      axios.get('https://inkbox.com/api/product/bebo')
-          .then(response => {
-            this.product = response.data
-          })
-          .catch()
+    getCSRFToken() {
+      axios.get('http://mobile-app-backend.test/sanctum/csrf-cookie').then(response => {
+        console.log(response)
+      });
     }
   }
 
