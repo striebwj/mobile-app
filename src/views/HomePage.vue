@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <ion-title>This works</ion-title>
       </ion-toolbar>
     </ion-header>
     
@@ -14,6 +14,19 @@
       </ion-header>
     
       <div id="container">
+        <ion-card>
+          <img src="//inkboxdesigns.imgix.net/EaFFas9bt6bKD21hkg7Ehp50lfuyOHerLzKVZnJk.jpg?auto=compress,format" alt="Test">
+          <ion-card-header>
+            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+            <ion-card-title>Card Title</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            Keep close to Nature's heart... and break clear away, once in awhile,
+            and climb a mountain or spend a week in the woods. Wash your spirit clean.
+          </ion-card-content>
+        </ion-card>
+
         <strong>Ready to create an app?</strong>
         <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
       </div>
@@ -21,9 +34,10 @@
   </ion-page>
 </template>
 
-<script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+<script>
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCardContent } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import axios from "axios";
 
 export default defineComponent({
   name: 'HomePage',
@@ -32,8 +46,31 @@ export default defineComponent({
     IonHeader,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonCard,
+    IonCardHeader,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonCardContent
+  },
+  data() {
+    return {
+      product: []
+    }
+  },
+  mounted() {
+    this.getProduct()
+  },
+  methods: {
+    getProduct() {
+      axios.get('https://inkbox.com/api/product/bebo')
+          .then(response => {
+            this.product = response.data
+          })
+          .catch()
+    }
   }
+
 });
 </script>
 
